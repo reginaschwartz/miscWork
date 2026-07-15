@@ -1,0 +1,64 @@
+[ {
+  "id" : "8675904",
+  "title" : "backend Developer -.NET",
+  "company" : "לוגיקה IT",
+  "location" : "רחובות",
+  "description" : "backend Developer -.NET לארגון פיננסי מוביל דרוש/ה backend Developer להשתלבות בצוות פיתוח האחראי על מערכות ליבה קריטיות בארגון. תיאור התפקיד: פיתוח ותחזוקה של מערכות backend מורכבות בסביבה ארגונית. פיתוח שירותים, רכיבי לוגיקה עסקית ו-Web APIs. עבודה עם טכנולוגיות.NET ו- JAVA בסביבת Microservices. פיתוח, שיפור ותחזוקה של רכיבים קיימים לצד פיתוח יכולות חדשות. עבודה שוטפת מול בסיסי נתונים ותכנון פתרונות טכנולוגיים. השתלבות בצוות פיתוח בסביבת Agile ועבודה מול צוותי frontend, QA ומנהלי מוצר. השתתפות בתהליכי Code Review ושיפור מתמיד של איכות הקוד והמערכת.",
+  "requirements" : "לפחות 5 שנות ניסיון בפיתוח תוכנה - חובה. ניסיון משמעותי בפיתוח backend באמצעות C # /.NET Framework ו-.NET Core - חובה. ניסיון בפיתוח JAVA - חובה. ניסיון בפיתוח REST APIs ו-Web Services - חובה. ניסיון בפיתוח Microservices ובעבודה עם Spring Boot - חובה. ניסיון בעבודה עם בסיסי נתונים רלציוניים ( SQL server ) ו-Entity Framework. הבנה מעמיקה ב-OOP, Design Patterns וכתיבת קוד איכותי וניתן לתחזוקה. יכולת עבודה עצמאית, הובלת משימות ועבודה בסביבה מרובת ממשקים. יתרון: ניסיון עם Git, Jenkins, Docker ו-OpenShift. ניסיון בפיתוח frontend באמצעות Vue.js או Angular. היכרות עם תהליכי CI/CD. ניסיון בעבודה במתודולוגיית Agile. ניסיון בפיתוח מערכות מורכבות בסביבת Enterprise. המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8675904",
+  "savedAt" : "2026-07-03T08:30:50.382647"
+}, {
+  "id" : "8682459",
+  "title" : "מפתח /ת backend לצוות GenAI",
+  "company" : "לוגיקה IT",
+  "location" : "חולון",
+  "description" : "Your Next Career Move Starts Here backend Developer - GenAI Team מיקום: תל אביב | היברידי (יומיים מהבית) | משרה מלאה על התפקיד הזדמנות להצטרף לצוות GenAI מתקדם ולהיות חלק מהמהפכה הטכנולוגית של אחד הארגונים הפיננסיים הגדולים בישראל. אנחנו מחפשים מפתח/ת backend מנוסה שייקח/תיקח חלק בפיתוח, עיצוב והקמה של פלטפורמת AI Agents ארגונית, עם דגש על טכנולוגיות חדשניות בעולמות הGenerative AI. התפקיד כולל עבודה על מערכות RAG, Agentic Workflows ופתרונות מבוססי LLM, תוך הובלת פיתוח תשתיות מתקדמות שמטרתן להנגיש יכולות AI רוחביות לכלל הארגון.",
+  "requirements" : "לפחות 4 שנות ניסיון בפיתוח backend ניסיון משמעותי בפיתוח עם Python / Node.js / JAVA ניסיון מעשי בבניית AI Agents בסביבת Production ניסיון בתכנון ופיתוח Agentic Workflows מורכבים שליטה בFrameworks לאורקסטרציה של AI כגון LangGraph או פתרונות דומים ניסיון בפיתוח והטמעה של מערכות RAG וארכיטקטורות מבוססות LLM היכרות עם עולמות LLMOps, Prompt Management, Evaluation ואופטימיזציית מודלים ניסיון בעבודה עם Vector Stores כגון Pinecone, Qdrant או Milvus הבנה מעמיקה בארכיטקטורה ותשתיות אפליקטיביות בסביבות מורכבות יכולת הובלת משימות מקצה לקצה ועבודה בסביבה דינמית וטכנולוגית היתרונות שלך רקע בעולמות DevOps ותהליכי CI/CD ניסיון בעבודה בארגונים גדולים / מערכות Enterprise תשוקה לטכנולוגיה, חדשנות ועבודה עם כלים מתקדמים תואר ראשון במדעי המחשב או תחום דומה When the match is right - everything Powers Up המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8682459",
+  "savedAt" : "2026-07-03T08:30:50.468009"
+}, {
+  "id" : "8569484",
+  "title" : "backend Developer team lead",
+  "company" : "מלם תים",
+  "location" : "רמת גן",
+  "description" : "דרוש/ה ראש/ת צוות backend להובלה מקצועית וניהולית של צוות הפיתוח עבור פרויקט תוכנה מורכב ומתקדם. עבור פיתוח מאפס התפקיד כולל הובלת פיתוח צד השרת, תכנון ויישום שירותי Microservices, עבודה בסביבת ‎.NET Core‎ ו-Web APIs, אחריות על איכות הקוד ואינטגרציה בין שירותים, ועבודה שוטפת מול צוותי Front End, DevOps, ארכיטקטורה ואבטחת מידע. העבודה במשרה מלאה בפתח תקווה",
+  "requirements" : "- 5 שנות ניסיון בפיתוח backend מתוכם שנתיים ומעלה בניהול צוות פיתוח - ניסיון משמעותי בפיתוח.NET Core ו- Web APIs - ניסיון בעבודה עם Microservices, Containers ובסיסי נתונים SQL - סיווג ביטחוני - יתרון משמעותי המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8569484",
+  "savedAt" : "2026-07-03T08:32:39.71047"
+}, {
+  "id" : "8717907",
+  "title" : "מפתח /ת backend לארגון פיננסי מוביל במרכז",
+  "company" : "יוניטסק בע\"מ",
+  "location" : "ראשון לציון",
+  "description" : "התמקדות בצד ה- backend של המערכת כולל אחריות על פיתוח ותחזוקת שירותים, רכיבי לוגיקה מורכבים ו-API. השתלבות בצוות פיתוח, הובלת משימות מורכבות והשפעה ישירה על ארכיטקטורת המערכת וביצועיה. הזדמנות מעולה לעבוד על מערכת המשלבת טכנולוגיות ותיקות וחדשות ולהוביל אותה קדימה.",
+  "requirements" : "5 שנות ניסיון בפיתוח תוכנה ניסיון מוכח ומומחיות בפיתוח backend בשפת C # ובסביבת.NET. היכרות מעמיקה עם.NET Framework ו-.NET Core ניסיון משמעותי בתכנון ופיתוח של Web APIs / שירותי REST. ניסיון בפיתוח JAVA ניסיון בפיתוח MicroServices כולל עבודה עם SpringBoot ניסיון בעבודה עם בסיסי נתונים רלציוניים (כמו SQL server ) ושימוש ב-Entity Framework הבנה טובה של עקרונות תכנון מונחה עצמים (OOP) ו-Design Patterns יכולת עבודה עצמאית, לקיחת אחריות והובלת משימות מקצה לקצה המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8717907",
+  "savedAt" : "2026-07-03T08:33:36.343658"
+}, {
+  "id" : "8628652",
+  "title" : "Senior backend Developer Python בחברת Cyber security",
+  "company" : "TechTalent",
+  "location" : "קרית אונו",
+  "description" : "חברת SaaS גלובלית בתחום הגנת הסייבר, מחפשת backend Developer מנוסה לצוות הליבה. עיקרי התפקיד: פיתוח שירותי backend מבוססי Microservices בסביבת Cloud אחריות על מחזור החיים המלא של הפיצ'ר - Design, Implementation, Testing ו-Deployment לפרודקשן תכנון ובניית Distributed Systems התומכות בעומסים גבוהים ובזמינות גבוהה (High Availability) כתיבת קוד נקי, תחזוקתי וברמה גבוהה - לצד Code Reviews ושיפור ביצועים של מערכות Legacy עבודה ב-Methodology של Agile מול Product Managers ו-Tech Leads בצוותים נוספים",
+  "requirements" : "מינימום 7 שנים בעולמות פיתוח ה- backend יכולת מוכחת בפיתוח ב- Python ברמה גבוהה שליטה בלפחות אחד מהבאים: Django / FastAPI / SQLAlchemy ניסיון בתכנון מערכות בעלות High Availability ויכולת Scale עבודה עם מסדי נתונים: PostgreSQL, Redis ו/או NoSQL רקע בסביבות ענן, כאשר AWS מהווה עדיפות היכרות עם שירותי AWS, SQS, SNS, EKS ו-S3 - יתרון המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8628652",
+  "savedAt" : "2026-07-03T08:33:36.359853"
+}, {
+  "id" : "8696547",
+  "title" : "סניור JAVA",
+  "company" : "פרוסיד",
+  "location" : "תל אביב יפו",
+  "description" : "מחפשים את האתגר הבא בפיתוח JAVA בכיר? הזדמנות להשתלב בתפקיד Senior JAVA Developer בארגון גדול ומוביל במרכז, בסביבת פיתוח מתקדמת, עם עבודה על מערכות משמעותיות, Microservices ותהליכי CI/CD. תיאור התפקיד: פיתוח ותחזוקה של מערכות Client ו-Server ב- JAVA עבודה בסביבת Agile כחלק מצוות פיתוח מקצועי פיתוח ועבודה בארכיטקטורת Microservices עבודה עם כלי CI/CD ותהליכי פיתוח מתקדמים השתלבות בסביבה טכנולוגית הכוללת DB, Jenkins, Kubernetes, Containers ו-Cloud",
+  "requirements" : "לפחות 4 שנות ניסיון בפיתוח JAVA ניסיון משמעותי עם Spring Boot ו-Spring Framework ניסיון בפיתוח ועבודה בארכיטקטורת Microservices ניסיון בעבודה מול בסיסי נתונים ניסיון בעבודה עם Maven ניסיון בעבודה עם כלי CI/CD, כולל Jenkins ניסיון וידע בעבודה עם JBoss / WildFly ניסיון בפיתוח frontend עם HTML, CSS ו- JavaScript היכרות עם כלי AI כגון GitHub Copilot / Q Developer ידע בתשתיות וסביבות הרצה: שרתים, Kubernetes, Containers, Cloud נשמח לקבל קורות חיים ממפתחי JAVA מנוסים שמחפשים תפקיד משמעותי בסביבה טכנולוגית מתקדמת המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8696547",
+  "savedAt" : "2026-07-03T08:33:36.376356"
+}, {
+  "id" : "8717400",
+  "title" : "דרוש /ה מוביל /ת תשתיות אוטומציה ו-AI",
+  "company" : "סיסנת תוכנה בע\"מ",
+  "location" : "תל אביב יפו",
+  "description" : "לארגון פיננסי מוביל, יציב וטכנולוגי דרוש/ה Senior SDET מנוסה להשתלבות בצוות עילית מולטי-דיסציפלינרי, המוביל את מהפכת ה-AI הארגונית. צוות תשתיות האוטומציה בחטיבה הטכנולוגית אחראי על פיתוח פלטפורמות איכות מתקדמות, כלים ארגוניים ויכולות Generative AI חכמות המשרתות את כלל יחידות הפיתוח בחברה (Web, Mobile, מערכות ליבה ועוד). זו הזדמנות יוצאת דופן להוביל משימות מקצה לקצה, לעבוד בסביבה אג'ילית ודינמית, ולהיות שותף/ה בעיצוב הארכיטקטורה ופיתוח פתרונות AI Agents ו-RAG מתקדמים בעולם האוטומציה הארגוני!",
+  "requirements" : "5+ שנות ניסיון בפיתוח backend / Full-Stack. שליטה חזקה באחת מהשפות: Python או JAVA / TypeScript. ניסיון מוכח בבניית מערכות מבוזרות, Microservices ו-REST APIs. הבנה מעמיקה ב- system Design וארכיטקטורת מערכות. ניסיון בעבודה בסביבת Linux ועבודה עם כלי CI/CD (Jenkins, JIRA, Bitbucket). יכולת עבודה בצוות, ראייה מערכתית רחבה ותשוקה להתמודדות עם אתגרים טכנולוגיים חדשניים. המשרה מיועדת לנשים וגברים כאחד. המשרה מיועדת לנשים ולגברים כאחד.",
+  "url" : "https://www.alljobs.co.il/Search/UploadSingle.aspx?JobID=8717400",
+  "savedAt" : "2026-07-03T08:33:36.433862"
+} ]
