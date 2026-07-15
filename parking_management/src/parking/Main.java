@@ -138,7 +138,7 @@ public class Main {
     private static void leave(ParkingLot lot, String licensePlate) {
         Optional<ParkingSpot> spot = lot.exit(licensePlate);
         if (spot.isPresent()) {
-            System.out.println("Vehicle [" + licensePlate + "] left Spot #" + spot.get().getSpotNumber());
+            System.out.println("Vehicle XXX [" + licensePlate + "] left Spot #" + spot.get().getSpotNumber());
         } else {
             System.out.println("Vehicle [" + licensePlate + "] not found in lot.");
         }
