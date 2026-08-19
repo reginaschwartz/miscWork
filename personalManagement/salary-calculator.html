@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monthly Salary Calculator</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --border: #e3e6ea;
+    --text: #1a1d21;
+    --text-secondary: #6b7280;
+    --accent: #2f6df6;
+    --success: #0f8a5f;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 32px 20px 64px;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 680px; margin: 0 auto; }
+
+  h1 { font-size: 24px; font-weight: 650; margin: 0; letter-spacing: -0.02em; }
+  h2 { font-size: 16px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+
+  .subtitle { color: var(--text-secondary); margin: 4px 0 0; }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── Form ── */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  input, select {
+    font: inherit;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+    width: 100%;
+    transition: border-color .12s, box-shadow .12s;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(47, 109, 246, .14);
+  }
+
+  .grid { display: grid; gap: 14px; }
+  .grid.two { grid-template-columns: 1fr 1fr; }
+
+  @media (max-width: 520px) {
+    .grid.two { grid-template-columns: 1fr; }
+  }
+
+  .actions { display: flex; gap: 10px; align-items: center; margin-top: 20px; }
+
+  button {
+    font: inherit;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .12s, border-color .12s;
+  }
+
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #2560e0; }
+  .btn-primary:disabled { opacity: .45; cursor: not-allowed; }
+
+  .btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+  .btn-secondary:hover { border-color: #c9ced6; }
+
+  .callout {
+    background: #fff8e6;
+    border: 1px solid #f0dca8;
+    color: #7a5a12;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 16px;
+  }
+
+  /* ── Results ── */
+  .employee {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .employee .label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .employee .value { font-size: 15px; font-weight: 500; margin-top: 2px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+
+  .stat .v {
+    font-size: 16px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat .v.success { color: var(--success); }
+
+  .stat .l { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .card-body { padding: 16px; }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0;
+  }
+
+  .row .amount { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .row.total {
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 14px;
+  }
+
+  .row.total .label { font-weight: 600; }
+  .row.total .amount { font-weight: 650; font-size: 15px; color: var(--accent); }
+
+  .dates { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .date-chip {
+    padding: 4px 10px;
+    border-radius: 5px;
+    background: #f1f3f6;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .footnote { color: var(--text-secondary); font-size: 12px; }
+
+  [hidden] { display: none !important; }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; padding: 0; font-size: 12px; }
+    .no-print { display: none !important; }
+    .page { max-width: none; }
+    .card, .stat, input, select { break-inside: avoid; }
+    .stat, .card, .date-chip {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Monthly Salary Calculator</h1>
+    <p class="subtitle no-print">
+      Calculates Shabbat (Saturday) free-day payments for the selected month.
+    </p>
+  </header>
+
+  <div class="no-print">
+    <hr>
+
+    <form id="form" autocomplete="off">
+      <h2 style="margin-bottom:16px">Input Details</h2>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="employeeName">Employee Name</label>
+          <input id="employeeName" type="text" placeholder="Full name">
+        </div>
+        <div class="field">
+          <label for="employeeId">Employee ID</label>
+          <input id="employeeId" type="text" placeholder="ID number">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="month">Month</label>
+          <select id="month"></select>
+        </div>
+        <div class="field">
+          <label for="year">Year</label>
+          <input id="year" type="number" placeholder="2026">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="baseSalary">Base Salary (₪)</label>
+          <input id="baseSalary" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div class="field">
+          <label for="pocketMoney">Pocket Money (₪)</label>
+          <input id="pocketMoney" type="number" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="shabbatRate">Weekly Free Day Amount per Shabbat (₪)</label>
+          <input id="shabbatRate" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div class="field">
+          <label for="holidayPay">Holiday Pay (₪)</label>
+          <input id="holidayPay" type="number" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="havraaDays">Dmei Havra'a Days</label>
+          <input id="havraaDays" type="number" step="0.5" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="havraaRate">Dmei Havra'a Amount per Day (₪)</label>
+          <input id="havraaRate" type="number" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="field">
+          <label for="adjustments">Adjustments (₪, may be negative)</label>
+          <input id="adjustments" type="number" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="callout" id="warning" hidden>
+        Please enter a valid year (1900–2200) and base salary to calculate.
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn-primary" id="calculateBtn">Calculate</button>
+        <button type="button" class="btn-secondary" id="printBtn" hidden>Print</button>
+      </div>
+    </form>
+  </div>
+
+  <section id="results" hidden>
+    <hr>
+
+    <div class="employee">
+      <div>
+        <div class="label">Employee Name</div>
+        <div class="value" id="outName">—</div>
+      </div>
+      <div>
+        <div class="label">Employee ID</div>
+        <div class="value" id="outId">—</div>
+      </div>
+    </div>
+
+    <h2 id="resultsTitle">Results</h2>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="v" id="statShabbatPay">₪0.00</div>
+        <div class="l">Shabbat Pay</div>
+      </div>
+      <div class="stat">
+        <div class="v" id="statHavraaPay">₪0.00</div>
+        <div class="l">Dmei Havra'a</div>
+      </div>
+      <div class="stat">
+        <div class="v" id="statHolidayPay">₪0.00</div>
+        <div class="l">Holiday Pay</div>
+      </div>
+      <div class="stat">
+        <div class="v" id="statAdjustments">+₪0.00</div>
+        <div class="l">Adjustments</div>
+      </div>
+      <div class="stat">
+        <div class="v success" id="statTotal">₪0.00</div>
+        <div class="l">Total Monthly Salary</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span>Salary Breakdown</span></div>
+      <div class="card-body" id="breakdown"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span>Shabbat Dates</span>
+        <span id="datesCount"></span>
+      </div>
+      <div class="card-body">
+        <div class="dates" id="dates"></div>
+      </div>
+    </div>
+
+    <p class="footnote" id="footnote"></p>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+const STORAGE_KEY = "salary-calculator";
+
+const FIELDS = [
+  "employeeName", "employeeId", "month", "year",
+  "baseSalary", "pocketMoney", "shabbatRate",
+  "havraaDays", "havraaRate", "holidayPay", "adjustments"
+];
+
+const el = (id) => document.getElementById(id);
+
+function getSaturdays(month, year) {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const dates = [];
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month - 1, day);
+    if (date.getDay() === 6) dates.push(date);
+  }
+  return dates;
+}
+
+function fmt(amount) {
+  return "₪" + amount.toLocaleString("he-IL", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function fmtSigned(amount) {
+  return (amount < 0 ? "-" : "+") + fmt(Math.abs(amount));
+}
+
+function fmtDate(date) {
+  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+}
+
+function num(id) {
+  return parseFloat(el(id).value) || 0;
+}
+
+function readState() {
+  const state = {};
+  FIELDS.forEach((id) => { state[id] = el(id).value; });
+  return state;
+}
+
+function isValid() {
+  const year = parseInt(el("year").value, 10);
+  return el("baseSalary").value.trim() !== "" &&
+    year >= 1900 && year <= 2200;
+}
+
+function breakdownRow(label, amount, isTotal) {
+  const row = document.createElement("div");
+  row.className = isTotal ? "row total" : "row";
+
+  const labelEl = document.createElement("span");
+  labelEl.className = "label";
+  labelEl.textContent = label;
+
+  const amountEl = document.createElement("span");
+  amountEl.className = "amount";
+  amountEl.textContent = amount;
+
+  row.append(labelEl, amountEl);
+  return row;
+}
+
+function calculate() {
+  const month = parseInt(el("month").value, 10);
+  const year = parseInt(el("year").value, 10);
+
+  const baseSalary = num("baseSalary");
+  const pocketMoney = num("pocketMoney");
+  const shabbatRate = num("shabbatRate");
+  const havraaDays = num("havraaDays");
+  const havraaRate = num("havraaRate");
+  const holidayPay = num("holidayPay");
+  const adjustments = num("adjustments");
+
+  const saturdays = getSaturdays(month, year);
+  const shabbatCount = saturdays.length;
+  const shabbatPay = shabbatCount * shabbatRate;
+  const havraaPay = havraaDays * havraaRate;
+  const total =
+    baseSalary + pocketMoney + shabbatPay + havraaPay + holidayPay + adjustments;
+
+  const monthName = MONTHS[month - 1];
+
+  el("outName").textContent = el("employeeName").value.trim() || "—";
+  el("outId").textContent = el("employeeId").value.trim() || "—";
+  el("resultsTitle").textContent = `Results — ${monthName} ${year}`;
+
+  el("statShabbatPay").textContent = fmt(shabbatPay);
+  el("statHavraaPay").textContent = fmt(havraaPay);
+  el("statHolidayPay").textContent = fmt(holidayPay);
+  el("statAdjustments").textContent = fmtSigned(adjustments);
+  el("statTotal").textContent = fmt(total);
+
+  const breakdown = el("breakdown");
+  breakdown.replaceChildren();
+  breakdown.append(breakdownRow("Base Salary", fmt(baseSalary)));
+  breakdown.append(breakdownRow("Pocket Money", fmt(pocketMoney)));
+  breakdown.append(breakdownRow(
+    `Shabbat Days (${shabbatCount} × ${fmt(shabbatRate)})`,
+    fmt(shabbatPay)
+  ));
+  if (havraaPay !== 0) {
+    breakdown.append(breakdownRow(
+      `Dmei Havra'a (${havraaDays} × ${fmt(havraaRate)})`,
+      fmt(havraaPay)
+    ));
+  }
+  if (holidayPay !== 0) {
+    breakdown.append(breakdownRow("Holiday Pay", fmt(holidayPay)));
+  }
+  if (adjustments !== 0) {
+    breakdown.append(breakdownRow("Adjustments", fmtSigned(adjustments)));
+  }
+  breakdown.append(breakdownRow("Total Monthly Salary", fmt(total), true));
+
+  el("datesCount").textContent = `${shabbatCount} dates`;
+
+  const dates = el("dates");
+  dates.replaceChildren();
+  saturdays.forEach((date) => {
+    const chip = document.createElement("div");
+    chip.className = "date-chip";
+    chip.textContent = fmtDate(date);
+    dates.append(chip);
+  });
+
+  el("footnote").textContent =
+    `${shabbatCount} Saturday${shabbatCount !== 1 ? "s" : ""} (Shabbat) in ${monthName} ${year}.`;
+
+  el("results").hidden = false;
+  el("printBtn").hidden = false;
+}
+
+function init() {
+  const select = el("month");
+  MONTHS.forEach((name, index) => {
+    const option = document.createElement("option");
+    option.value = String(index + 1);
+    option.textContent = name;
+    select.append(option);
+  });
+
+  const now = new Date();
+  select.value = String(now.getMonth() + 1);
+  el("year").value = String(now.getFullYear());
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    FIELDS.forEach((id) => {
+      if (typeof saved[id] === "string") el(id).value = saved[id];
+    });
+  } catch (e) {
+    // Ignore unreadable saved state and fall back to defaults.
+  }
+
+  FIELDS.forEach((id) => {
+    el(id).addEventListener("input", () => {
+      // Hide stale figures until the user recalculates.
+      el("results").hidden = true;
+      el("printBtn").hidden = true;
+      el("warning").hidden = isValid() || el("baseSalary").value.trim() === "";
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(readState()));
+      } catch (e) {
+        // Storage may be unavailable; persistence is optional.
+      }
+    });
+  });
+
+  el("form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!isValid()) {
+      el("warning").hidden = false;
+      return;
+    }
+    el("warning").hidden = true;
+    calculate();
+  });
+
+  el("printBtn").addEventListener("click", () => window.print());
+}
+
+init();
+</script>
+</body>
+</html>
