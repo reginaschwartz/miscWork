@@ -66,6 +66,36 @@
     box-shadow: 0 0 0 3px rgba(47, 109, 246, .14);
   }
 
+  input[readonly] {
+    background: #f1f3f6;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  input[readonly]:focus { border-color: var(--border); box-shadow: none; }
+
+  .field-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .hint { font-size: 11px; color: var(--text-secondary); margin: 0; }
+
+  .link-btn {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+  }
+
+  .link-btn:hover { text-decoration: underline; }
+
   .grid { display: grid; gap: 14px; }
   .grid.two { grid-template-columns: 1fr 1fr; }
 
@@ -266,8 +296,33 @@
           <input id="shabbatRate" type="number" step="0.01" placeholder="0.00">
         </div>
         <div class="field">
-          <label for="holidayPay">Holiday Pay (₪)</label>
-          <input id="holidayPay" type="number" step="0.01" placeholder="0.00">
+          <div class="field-head">
+            <label for="shabbatDays">Shabbat Days Worked</label>
+            <button type="button" class="link-btn" id="resetShabbatDays" hidden></button>
+          </div>
+          <input id="shabbatDays" type="number" min="0" step="1" placeholder="0">
+          <p class="hint" id="shabbatDaysHint"></p>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="shabbatPayDisplay">Shabbat Pay (₪)</label>
+          <input id="shabbatPayDisplay" type="text" readonly tabindex="-1">
+          <p class="hint">Shabbat days worked × amount per Shabbat.</p>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-bottom:14px">
+        <div class="field">
+          <label for="holidayAmount">Holiday Pay Amount (₪)</label>
+          <input id="holidayAmount" type="number" step="0.01" placeholder="0.00">
+          <p class="hint">Amount per holiday day.</p>
+        </div>
+        <div class="field">
+          <label for="holidayTotalDisplay">Holiday Pay Total (₪)</label>
+          <input id="holidayTotalDisplay" type="text" readonly tabindex="-1">
+          <p class="hint" id="holidayFormulaHint"></p>
         </div>
       </div>
 
@@ -369,11 +424,22 @@ const MONTHS = [
 
 const STORAGE_KEY = "salary-calculator";
 
+// Holiday pay is prorated: 3 holiday days over 9 of the 12 months.
+const HOLIDAY_DAYS = 3;
+const HOLIDAY_MONTHS = 9;
+const MONTHS_IN_YEAR = 12;
+const HOLIDAY_FACTOR = HOLIDAY_DAYS * (HOLIDAY_MONTHS / MONTHS_IN_YEAR);
+const HOLIDAY_FORMULA = `${HOLIDAY_DAYS} × ${HOLIDAY_MONTHS}/${MONTHS_IN_YEAR}`;
+
 const FIELDS = [
   "employeeName", "employeeId", "month", "year",
-  "baseSalary", "pocketMoney", "shabbatRate",
-  "havraaDays", "havraaRate", "holidayPay", "adjustments"
+  "baseSalary", "pocketMoney", "shabbatRate", "shabbatDays",
+  "havraaDays", "havraaRate", "holidayAmount", "adjustments"
 ];
+
+// Set once the user types their own Shabbat count, which stops the calendar
+// count from overwriting it. Reset when the month or year changes.
+let shabbatOverridden = false;
 
 const el = (id) => document.getElementById(id);
 
@@ -407,9 +473,51 @@ function num(id) {
 }
 
 function readState() {
-  const state = {};
+  const state = { shabbatOverridden };
   FIELDS.forEach((id) => { state[id] = el(id).value; });
   return state;
+}
+
+function persist() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(readState()));
+  } catch (e) {
+    // Storage may be unavailable; persistence is optional.
+  }
+}
+
+function invalidateResults() {
+  // Hide stale figures until the user recalculates.
+  el("results").hidden = true;
+  el("printBtn").hidden = true;
+}
+
+function autoShabbatCount() {
+  const month = parseInt(el("month").value, 10);
+  const year = parseInt(el("year").value, 10);
+  if (!(month >= 1 && month <= 12) || !(year >= 1900 && year <= 2200)) return 0;
+  return getSaturdays(month, year).length;
+}
+
+function refreshShabbatFields() {
+  const auto = autoShabbatCount();
+  if (!shabbatOverridden) el("shabbatDays").value = String(auto);
+
+  const days = num("shabbatDays");
+  const resetBtn = el("resetShabbatDays");
+  resetBtn.textContent = `Reset to ${auto}`;
+  resetBtn.hidden = days === auto;
+
+  el("shabbatDaysHint").textContent = days === auto
+    ? `${auto} Saturday${auto !== 1 ? "s" : ""} in the selected month.`
+    : `Manually set. Calendar shows ${auto}.`;
+
+  el("shabbatPayDisplay").value = fmt(days * num("shabbatRate"));
+}
+
+function refreshDerived() {
+  refreshShabbatFields();
+  el("holidayTotalDisplay").value = fmt(num("holidayAmount") * HOLIDAY_FACTOR);
 }
 
 function isValid() {
@@ -443,11 +551,13 @@ function calculate() {
   const shabbatRate = num("shabbatRate");
   const havraaDays = num("havraaDays");
   const havraaRate = num("havraaRate");
-  const holidayPay = num("holidayPay");
+  const holidayAmount = num("holidayAmount");
+  const holidayPay = holidayAmount * HOLIDAY_FACTOR;
   const adjustments = num("adjustments");
 
   const saturdays = getSaturdays(month, year);
-  const shabbatCount = saturdays.length;
+  const calendarCount = saturdays.length;
+  const shabbatCount = num("shabbatDays");
   const shabbatPay = shabbatCount * shabbatRate;
   const havraaPay = havraaDays * havraaRate;
   const total =
@@ -480,14 +590,17 @@ function calculate() {
     ));
   }
   if (holidayPay !== 0) {
-    breakdown.append(breakdownRow("Holiday Pay", fmt(holidayPay)));
+    breakdown.append(breakdownRow(
+      `Holiday Pay (${HOLIDAY_FORMULA} × ${fmt(holidayAmount)})`,
+      fmt(holidayPay)
+    ));
   }
   if (adjustments !== 0) {
     breakdown.append(breakdownRow("Adjustments", fmtSigned(adjustments)));
   }
   breakdown.append(breakdownRow("Total Monthly Salary", fmt(total), true));
 
-  el("datesCount").textContent = `${shabbatCount} dates`;
+  el("datesCount").textContent = `${calendarCount} dates`;
 
   const dates = el("dates");
   dates.replaceChildren();
@@ -498,8 +611,12 @@ function calculate() {
     dates.append(chip);
   });
 
-  el("footnote").textContent =
-    `${shabbatCount} Saturday${shabbatCount !== 1 ? "s" : ""} (Shabbat) in ${monthName} ${year}.`;
+  let footnote =
+    `${calendarCount} Saturday${calendarCount !== 1 ? "s" : ""} (Shabbat) in ${monthName} ${year}.`;
+  if (shabbatCount !== calendarCount) {
+    footnote += ` Paid for ${shabbatCount} actually worked.`;
+  }
+  el("footnote").textContent = footnote;
 
   el("results").hidden = false;
   el("printBtn").hidden = false;
@@ -523,23 +640,43 @@ function init() {
     FIELDS.forEach((id) => {
       if (typeof saved[id] === "string") el(id).value = saved[id];
     });
+    shabbatOverridden = saved.shabbatOverridden === true;
   } catch (e) {
     // Ignore unreadable saved state and fall back to defaults.
   }
 
-  FIELDS.forEach((id) => {
+  el("holidayFormulaHint").textContent = `${HOLIDAY_FORMULA} × holiday day amount.`;
+
+  // These only set the override flag; they run before the generic handler
+  // below, which does the recomputing and persists the result.
+  ["month", "year"].forEach((id) => {
     el(id).addEventListener("input", () => {
-      // Hide stale figures until the user recalculates.
-      el("results").hidden = true;
-      el("printBtn").hidden = true;
-      el("warning").hidden = isValid() || el("baseSalary").value.trim() === "";
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(readState()));
-      } catch (e) {
-        // Storage may be unavailable; persistence is optional.
-      }
+      // A manual count belongs to the month it was entered for.
+      shabbatOverridden = false;
     });
   });
+
+  el("shabbatDays").addEventListener("input", () => {
+    shabbatOverridden = true;
+  });
+
+  el("resetShabbatDays").addEventListener("click", () => {
+    shabbatOverridden = false;
+    refreshDerived();
+    invalidateResults();
+    persist();
+  });
+
+  FIELDS.forEach((id) => {
+    el(id).addEventListener("input", () => {
+      refreshDerived();
+      invalidateResults();
+      el("warning").hidden = isValid() || el("baseSalary").value.trim() === "";
+      persist();
+    });
+  });
+
+  refreshDerived();
 
   el("form").addEventListener("submit", (event) => {
     event.preventDefault();
